@@ -76,9 +76,9 @@ export const inlineStylerRTLProccessorHelpers = (isRTL) => {
 
 
 export default function processor(styleObject, configurations) {
-  const {isRTL} = configurations;
+  try
+  {const {isRTL} = configurations;
   invariant(typeof isRTL !== "undefined", UNDEFINED_IS_RTL_ERROR);
-
   const transformAttributeKey = attributeKeyReplacementFactory(isRTL);
   const transformAttributeValue = attributeValueReplacementFactory(isRTL);
   return Object.entries(styleObject).reduce((acc, [key, value]) => {
@@ -88,7 +88,10 @@ export default function processor(styleObject, configurations) {
     return Object.assign(acc, {
       [transformedKey]: transformedValue
     })
-  }, {});
+  }, {});}
+  catch(err){
+    console.log(err)
+  }
 }
 
 
