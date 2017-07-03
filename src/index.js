@@ -90,7 +90,7 @@ export default function processor(styleObject, configurations) {
     })
   }, {});}
   catch(err){
-    console.log(err)
+    console.log(err,styleObject);
   }
 }
 
