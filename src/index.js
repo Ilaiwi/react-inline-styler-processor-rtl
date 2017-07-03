@@ -76,22 +76,26 @@ export const inlineStylerRTLProccessorHelpers = (isRTL) => {
 
 
 export default function processor(styleObject, configurations) {
-  try
-  {const {isRTL} = configurations;
+  const {isRTL} = configurations;
   invariant(typeof isRTL !== "undefined", UNDEFINED_IS_RTL_ERROR);
+
   const transformAttributeKey = attributeKeyReplacementFactory(isRTL);
   const transformAttributeValue = attributeValueReplacementFactory(isRTL);
-  return Object.entries(styleObject).reduce((acc, [key, value]) => {
+  return Object.entries(styleObject)
+  .reduce((acc, [key, value]) => {
+    if (key && value)
+      return Object.assign(acc, {
+        [key]: value
+      })
+  }, {})
+  .reduce((acc, [key, value]) => {
     const transformedKey = transformAttributeKey(key);
     const transformedValue = transformAttributeValue(key, value);
 
     return Object.assign(acc, {
       [transformedKey]: transformedValue
     })
-  }, {});}
-  catch(err){
-    console.log(err,styleObject);
-  }
+  }, {});
 }
 
 
